@@ -4,9 +4,10 @@
  * Author: Hayden Zeller
  * Date:  
  */
+import java.io.*;
 import java.util.*;
 public class HaydenZeller_CaeserCipher {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		int option;
 		Scanner scan = new Scanner(System.in);
 		// Print menu
@@ -63,12 +64,15 @@ public class HaydenZeller_CaeserCipher {
 	 * Excepts: Main Scanner
 	 * Returns: Nothing
 	 */
-	private static void encipherSelection(Scanner scan)
+	private static void encipherSelection(Scanner scan) throws IOException
 	{
 		String userMessage;
 		String keyword;
 		String cipheredMessage;
 		int shiftValue;
+		String fileName;
+		String cont;
+		String writeResult;
 		System.out.print("\nEnter a plaintext message to be enciphered: ");
 		scan.nextLine(); // Scanner buffer flush
 		userMessage = scan.nextLine().toUpperCase(); // converts message to upper case
@@ -78,6 +82,41 @@ public class HaydenZeller_CaeserCipher {
 		divider(); // prints divider 
 		System.out.printf("Message: %s\nKeyword: %s\nShift Value: %d\nEnciphered Message: %s\n", userMessage, keyword, shiftValue, cipheredMessage);
 		divider(); // prints divider
+		do
+		{
+			System.out.print("Enter a filename to write the enciphered message to (file type will be .txt): ");
+			fileName = scan.next();
+			writeResult = fileWriter(fileName, cipheredMessage);
+			if (writeResult.equals("created"))
+			{
+				break;
+			}
+		}
+		while(true);
+		System.out.println();
+		divider();
+		System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
+		cont = scan.next();
+		do
+		{
+			if (cont.matches("[yY]"))
+			{
+				divider();
+				main(null);
+			}
+			else if (cont.matches("[nN]"))
+			{
+				System.out.print("Goodbye.");
+				break;
+			}
+			else
+			{
+				System.out.println("Invalid choice.");
+			}
+		}
+		while(true);
+		
+		
 	} // end encipherSselection
 	/* 
 	 * Method Name: keyword
@@ -182,6 +221,36 @@ public class HaydenZeller_CaeserCipher {
 	 */
 	private static void divider()
 	{
-		System.out.println("**************************************************************************");
+		System.out.println("\n**************************************************************************");
 	} // end divider
+	
+	private static String fileWriter(String fileName, String cipherText) throws IOException
+	{
+		String result = "";
+		try
+		{
+			File outFile = new File(fileName);
+			if (outFile.createNewFile())
+			{
+				System.out.printf("\nFile created: %s", fileName);
+				result = "created";
+			}
+			else
+			{
+				System.out.println("\nFile already exists\n");
+				result = "exists";
+			}
+		}
+		catch (Exception e)
+		{
+			result = "error";
+		}
+		if (result.equals("created"))
+		{
+			PrintWriter out = new PrintWriter(fileName);
+			out.println(cipherText);
+			out.close();
+		}
+		return result;
+	}
 } // End program
