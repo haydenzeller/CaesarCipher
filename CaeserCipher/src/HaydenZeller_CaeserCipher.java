@@ -82,41 +82,39 @@ public class HaydenZeller_CaeserCipher {
 		divider(); // prints divider 
 		System.out.printf("Message: %s\nKeyword: %s\nShift Value: %d\nEnciphered Message: %s\n", userMessage, keyword, shiftValue, cipheredMessage);
 		divider(); // prints divider
-		do
+		do // to get the filename from user
 		{
 			System.out.print("Enter a filename to write the enciphered message to (file type will be .txt): ");
-			fileName = scan.next();
-			writeResult = fileWriter(fileName, cipheredMessage);
-			if (writeResult.equals("created"))
+			fileName = scan.next(); 
+			writeResult = fileWriter(fileName, cipheredMessage); // calls the file writer methode and stores the return result in var writeResult
+			if (writeResult.equals("created")) // if the fileWriter method returns 'created' break the for loop
 			{
 				break;
 			}
 		}
 		while(true);
-		System.out.println();
-		divider();
-		System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
-		cont = scan.next();
-		do
+		do // give user the chance to exit or to loop back to main
 		{
-			if (cont.matches("[yY]"))
-			{
-				divider();
-				main(null);
-			}
-			else if (cont.matches("[nN]"))
-			{
-				System.out.print("Goodbye.");
-				break;
-			}
-			else
-			{
-				System.out.println("Invalid choice.");
-			}
+			divider();
+			System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
+			cont = scan.next();
+				if (cont.matches("[yY]")) // if user answers yes (y,Y) call main method withh null value
+				{
+					divider();
+					main(null);
+				}
+				else if (cont.matches("[nN]")) // if user answers no (n,N) end the program
+				{
+					System.out.print("Goodbye.");
+					break;
+				}
+				else
+				{
+					System.out.println("\nInvalid choice.");
+		
+				}
 		}
 		while(true);
-		
-		
 	} // end encipherSselection
 	/* 
 	 * Method Name: keyword
@@ -221,9 +219,14 @@ public class HaydenZeller_CaeserCipher {
 	 */
 	private static void divider()
 	{
-		System.out.println("\n**************************************************************************");
+		System.out.println("\n**************************************************************************\n");
 	} // end divider
-	
+	/* 
+	 * Method Name: fileWriter
+	 * Purpose: To take the enciphered text and write it to a file specified by the user
+	 * Excepts: String fileName, String cipherText
+	 * Returns: String (to send the status of the method back to the caller)
+	 */
 	private static String fileWriter(String fileName, String cipherText) throws IOException
 	{
 		String result = "";
