@@ -1,3 +1,4 @@
+package ceasarCipher;
 /*
  * Title: HaydenZeller_CaeserCipher.java
  * Purpose: To encipher and decipher strings
@@ -6,6 +7,8 @@
  */
 import java.io.IOException;
 import java.util.Scanner;
+
+import ceasarCipher.projectMethods.*;
 public class HZ_Regular_Caesar {
 	public static void main(String[] args) throws IOException 
 	{

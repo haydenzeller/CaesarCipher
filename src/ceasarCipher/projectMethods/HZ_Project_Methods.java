@@ -1,4 +1,5 @@
-
+package ceasarCipher.projectMethods;
+import ceasarCipher.HZ_Regular_Caesar;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -75,8 +76,9 @@ public class HZ_Project_Methods {
 		do // give user the chance to exit or to loop back to main
 		{
 			divider();
+			scan.nextLine();
 			System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
-			cont = scan.next();
+			cont = scan.nextLine();
 				if (cont.matches("[yY]")) // if user answers yes (y,Y) call main method with null value
 				{
 					divider();
@@ -84,7 +86,7 @@ public class HZ_Project_Methods {
 				}
 				else if (cont.matches("[nN]")) // if user answers no (n,N) end the program
 				{
-					System.out.print("Goodbye.");
+					System.out.println("Goodbye.");
 					break;
 				}
 				else
