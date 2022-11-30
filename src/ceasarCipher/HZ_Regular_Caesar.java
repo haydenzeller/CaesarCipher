@@ -1,16 +1,14 @@
 package ceasarCipher;
+import java.io.IOException;
 /*
  * Title: HaydenZeller_CaeserCipher.java
  * Purpose: To encipher and decipher strings
  * Author: Hayden Zeller
  * Date:  
  */
-import java.io.IOException;
 import java.util.Scanner;
-
-import ceasarCipher.projectMethods.*;
-public class HZ_Regular_Caesar {
-	public static void main(String[] args) throws IOException 
+public class HZ_Regular_Caesar extends HZ_Project_Methods{
+	public static void main(String[] args) throws IOException
 	{
 		int option;
 		Scanner scan = new Scanner(System.in);
@@ -36,7 +34,6 @@ public class HZ_Regular_Caesar {
 		scan.close();
 	} // end main
 } // End program
-
 
 
 

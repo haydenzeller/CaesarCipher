@@ -1,5 +1,4 @@
-package ceasarCipher.projectMethods;
-import ceasarCipher.HZ_Regular_Caesar;
+package ceasarCipher;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,10 +6,6 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class HZ_Project_Methods {
-	public static void main(String[] args)
-	{
-		
-	}
 	/*
 	 * Method Name: validateMenuSelection
 	 * Purpose: To validate if user inputs 1 or 2
@@ -46,13 +41,8 @@ public class HZ_Project_Methods {
 	 */
 	public static void encipherSelection(Scanner scan) throws IOException
 	{
-		String userMessage;
-		String keyword;
-		String cipheredMessage;
-		int shiftValue;
-		String fileName;
-		String cont;
-		String writeResult;
+		String userMessage, keyword, cipheredMessage, fileName, cont, writeResult; // string vars
+		int shiftValue; // int var
 		System.out.print("\nEnter a plaintext message to be enciphered: ");
 		scan.nextLine(); // Scanner buffer flush
 		userMessage = scan.nextLine().toUpperCase(); // converts message to upper case
@@ -73,10 +63,10 @@ public class HZ_Project_Methods {
 			}
 		}
 		while(true);
+		scan.nextLine(); // buffer flush
 		do // give user the chance to exit or to loop back to main
 		{
 			divider();
-			scan.nextLine();
 			System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
 			cont = scan.nextLine();
 				if (cont.matches("[yY]")) // if user answers yes (y,Y) call main method with null value
@@ -203,32 +193,32 @@ public class HZ_Project_Methods {
 	 */
 	public static String fileWriter(String fileName, String cipherText) throws IOException
 	{
-		String result = "";
+		String result = ""; // initalize the result var with ""
 		try
 		{
-			File outFile = new File(fileName);
-			if (outFile.createNewFile())
+			File outFile = new File(fileName); // create a file object using the user inputted file name
+			if (outFile.createNewFile()) // if a new file is created
 			{
-				System.out.printf("\nFile created: %s\n", fileName);
-				result = "created";
+				System.out.printf("\nFile created: %s\n", fileName); // notify user of the newly created file
+				result = "created"; // update result with created
 			}
-			else
+			else // else the file already exists
 			{
-				System.out.println("\nFile already exists\n");
-				result = "exists";
+				System.out.println("\nFile already exists\n"); // notify user that the file already exists
+				result = "exists"; // update result with 'exists'
 			}
 		}
-		catch (Exception e)
+		catch (Exception e) // catch IO erroer
 		{
 			result = "error";
 		}
-		if (result.equals("created"))
+		if (result.equals("created")) // if result is created 
 		{
-			PrintWriter out = new PrintWriter(fileName);
-			out.println(cipherText);
-			out.close();
+			PrintWriter out = new PrintWriter(fileName); // create a PrintWriter
+			out.println(cipherText); // output the cipher text to the newly created file
+			out.close(); // close the print writer
 		}
-		return result;
+		return result; // return result to caller
 	}
 	/*
 	 * Method Name: decipherSelection
@@ -326,11 +316,16 @@ public class HZ_Project_Methods {
 		return message; // return the line read from file
 		
 	} // end file reader
-	
+	/*
+	 * Method name: decipher
+	 * Purpose: to decipher an enciphered message
+	 * Accepts: String encipheredMessage, integer shiftValue
+	 * returns: String deciphered
+	 */
 	public static String decipher(String encipheredMessage, int shiftValue)
 	{
 		// declare variables
-		String deciphered = ""; // Initialize string with "" value
+		String deciphered = "";
 		char position; 
 		int positionIndex;
 		int i;
@@ -346,7 +341,7 @@ public class HZ_Project_Methods {
 			else // otherwise set the value of positionIndex (index of the ALPHA constant) to the index of the plainText (position) + shiftValue
 			{
 				positionIndex = ALPHA.indexOf(position) - shiftValue; // sets positionIndex to current plainText char and its integer value in the ALPHA constant, add shiftValue
-				if (positionIndex < 0) // if the positionIndex is out of range (not between 0-25) subtract 25 to loop back to the start of the ALPHA constant
+				if (positionIndex < 0) // if the positionIndex is out of range (not between 0-25) add 26 to loop back to the start of the ALPHA constant
 				{
 					positionIndex += 26;
 				}
