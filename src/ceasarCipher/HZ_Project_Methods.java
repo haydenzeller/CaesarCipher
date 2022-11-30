@@ -41,7 +41,7 @@ public class HZ_Project_Methods {
 	 */
 	public static void encipherSelection(Scanner scan) throws IOException
 	{
-		String userMessage, keyword, cipheredMessage, fileName, cont, writeResult; // string vars
+		String userMessage, keyword, cipheredMessage, fileName, writeResult; // string vars
 		int shiftValue; // int var
 		System.out.print("\nEnter a plaintext message to be enciphered: ");
 		scan.nextLine(); // Scanner buffer flush
@@ -61,29 +61,6 @@ public class HZ_Project_Methods {
 			{
 				break;
 			}
-		}
-		while(true);
-		scan.nextLine(); // buffer flush
-		do // give user the chance to exit or to loop back to main
-		{
-			divider();
-			System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
-			cont = scan.nextLine();
-				if (cont.matches("[yY]")) // if user answers yes (y,Y) call main method with null value
-				{
-					divider();
-					HZ_Regular_Caesar.main(null);
-				}
-				else if (cont.matches("[nN]")) // if user answers no (n,N) end the program
-				{
-					System.out.println("Goodbye.");
-					break;
-				}
-				else
-				{
-					System.out.println("\nInvalid choice.");
-		
-				}
 		}
 		while(true);
 	} // end encipherSselection
@@ -228,12 +205,13 @@ public class HZ_Project_Methods {
 	 */
 	public static void decipherSelection(Scanner scan) throws IOException
 	{
-		String encipheredMessage, key, decipheredMessage, cont; // declare variables
+		String encipheredMessage, key, decipheredMessage; // declare variables
 		int shiftValue; // declare variables
 		while(true) // while loop to confirm if user is reading from a file
 		{
 			System.out.print("\nAre you reading the enciphered message from a file?(y/n): "); 
 			String selection = scan.next();
+			scan.nextLine();
 			if (selection.matches("[yY]")) // if user inputs y or Y point them to the fileReader class
 			{
 				encipheredMessage = fileReader(scan);
@@ -241,7 +219,6 @@ public class HZ_Project_Methods {
 			}
 			else if (selection.matches("[nN]"))// else ask user to input the enciphered message using the keyboard
 			{
-				scan.nextLine();
 				System.out.print("\nEnter the enciphered message: ");
 				encipheredMessage = scan.nextLine().toUpperCase();
 				break;
@@ -251,34 +228,12 @@ public class HZ_Project_Methods {
 				System.out.println("\nInvalid choice");
 			}
 		}
-		System.out.print("Enter the key: "); // ask user for key
-		key = scan.next().toUpperCase(); // initialize key variable
+		key = keyword(scan); // initialize key variable
 		shiftValue = shiftValue(key); // call the shift value function and pass the users key word
 		decipheredMessage = decipher(encipheredMessage, shiftValue); // decipher the message by calling the decipher method and passing the enciphered message and the shift value
 		divider();
 		System.out.printf("Enciphered Message: %s\nKey: %s\nShift Value: %d\nDeciphered Message: %s\n", encipheredMessage, key, shiftValue, decipheredMessage); // print a summary of what the program did
 		divider();
-		do // give user the chance to exit or to loop back to main
-		{
-			System.out.print("Do you want to decipher or encipher another message? (Y/n): ");
-			scan.nextLine();
-			cont = scan.nextLine();
-				if (cont.matches("[yY]")) // if user answers yes (y,Y) call main method with null value
-				{
-					divider();
-					HZ_Regular_Caesar.main(null);
-				}
-				else if (cont.matches("[nN]")) // if user answers no (n,N) end the program
-				{
-					System.out.println("Goodbye.");
-					break;
-				}
-				else
-				{
-					System.out.println("\nInvalid choice.");
-				}
-		}
-		while(true);
 	} // end decipher selection
 	/*
 	 * Method name: file reader
@@ -313,6 +268,7 @@ public class HZ_Project_Methods {
 				System.out.println("\nFile not found."); // message
 			}
 		}
+		scan.nextLine();
 		return message; // return the line read from file
 		
 	} // end file reader
@@ -351,4 +307,4 @@ public class HZ_Project_Methods {
 		}
 		return deciphered;
 	}
-}
+} // end HZ_Project_Methods
